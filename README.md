@@ -91,8 +91,8 @@ cat /log/time.log
 ```
 crontab -e
 TZ=Asia/Taipei
-* * * * * /script/generatelog.sh >> /log/cron.log 2>&1
-*/2 * * * * logrotate -f /etc/logrotate.d/myrotate >> /log/cron.log 2>&1
+0-58/2 * * * * /script/generatelog.sh >> /log/cron.log 2>&1
+1-59/2 * * * * logrotate -f /etc/logrotate.d/myrotate >> /log/cron.log 2>&1
 crontab -l
 
 tail -f /log/time_rotate.log
