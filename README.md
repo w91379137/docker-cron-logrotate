@@ -31,7 +31,7 @@ cat /log/time.log
 ```
 crontab -e
 TZ=Asia/Taipei
-* * * * * /script/generatelog.sh
+* * * * * /script/generatelog.sh >> /log/cron.log 2>&1
 crontab -l
 ```
 
@@ -49,6 +49,7 @@ kill PID
 ```
 cd /etc/logrotate.d
 touch myrotate
+chmod 644 myrotate
 ```
 
 ## 撰寫 logrotate 內容
@@ -57,6 +58,7 @@ vim myrotate
 /log/time.log {
 
     missingok
+    create 777 root root
     rotate 10
 
     daily
@@ -76,8 +78,8 @@ vim myrotate
 ## 啟動 logrotate 看看
 ```
 logrotate -f /etc/logrotate.d/myrotate >> /log/cron.log 2>&1
-ls /log
-ls /log/archive
+ls /log -ltr
+ls /log/archive -ltr
 
 cat /log/cron.log
 cat /log/time_rotate.log
@@ -85,6 +87,19 @@ cat /log/time_rotate.log
 cat /log/time.log
 ```
 
+## 設定 crontab
+```
+crontab -e
+TZ=Asia/Taipei
+* * * * * /script/generatelog.sh >> /log/cron.log 2>&1
+*/2 * * * * logrotate -f /etc/logrotate.d/myrotate >> /log/cron.log 2>&1
+crontab -l
+
+tail -f /log/time_rotate.log
+tail -f /log/cron.log
+
+watch -n 5 ls /log/archive -ltr
+```
 
 # Git Commit Message 這樣寫會更好
 https://wadehuanglearning.blogspot.com/2019/05/commit-commit-commit-why-what-commit.html
