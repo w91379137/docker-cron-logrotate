@@ -26,7 +26,21 @@ source /script/generatelog.sh
 cat /log/time.log
 ```
 
+設定 crontab
+```
+crontab -e
+TZ=Asia/Taipei
+* * * * * /script/generatelog.sh
+crontab -l
+```
 
+啟動 crontab cron 指令會 背景執行
+```
+cron
+tail -f /log/time.log
+top
+kill PID
+```
 
 每兩分鐘切一次 log
 
