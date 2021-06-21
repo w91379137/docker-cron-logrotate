@@ -5,18 +5,17 @@
 
 # 每一分鐘寫一次 log
 
-## 新增 /script/generatelog.sh
+## 建立 /script/generatelog.sh
 ```
 mkdir -p /script
 cd /script
 touch generatelog.sh
 chmod +x generatelog.sh
-vim generatelog.sh
 ```
 
-## 建立連續 log 的 shell
+## 撰寫連續 log 的 shell
 ```
-# generatelog.sh
+vim generatelog.sh
 time=$(date +"%Y_%m%d_%H%M_%S")
 echo ${time} >> /log/time.log
 ```
@@ -46,7 +45,45 @@ kill PID
 
 # 每兩分鐘切一次 log
 
+## 建立 /etc/logrotate.d/myrotate
+```
+cd /etc/logrotate.d
+touch myrotate
+```
 
+## 撰寫 logrotate 內容
+```
+vim myrotate
+/log/time.log {
+
+    missingok
+    rotate 10
+
+    daily
+    dateext
+    dateformat .%Y-%m%d-%s
+
+    olddir archive/
+    createolddir 777 root root
+
+    postrotate
+        time=$(date +"%Y_%m%d_%H%M_%S")
+        echo ${time} >> /log/time_rotate.log
+    endscript
+}
+```
+
+## 啟動 logrotate 看看
+```
+logrotate -f /etc/logrotate.d/myrotate >> /log/cron.log 2>&1
+ls /log
+ls /log/archive
+
+cat /log/cron.log
+cat /log/time_rotate.log
+
+cat /log/time.log
+```
 
 
 # Git Commit Message 這樣寫會更好
