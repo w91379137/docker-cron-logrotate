@@ -5,10 +5,10 @@
 
 # 每一分鐘寫一次 log
 
-## mount /script/generatelog.sh
+## mount /script/timelog.sh
 ## 啟動 shell 看看
 ```
-/script/generatelog.sh
+/script/timelog.sh
 cat /log/time.log
 ```
 
