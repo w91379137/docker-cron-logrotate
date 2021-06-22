@@ -1,4 +1,4 @@
 
 TZ=Asia/Taipei
 0-58/2 * * * * /script/timelog.sh >> /log/cron.log 2>&1
-1-59/2 * * * * /usr/sbin/logrotate -f /etc/logrotate.d/myrotate >> /log/cron.log 2>&1
+1-59/2 * * * * /usr/sbin/logrotate -f /etc/logrotate.d/timelog_rotate >> /log/cron.log 2>&1

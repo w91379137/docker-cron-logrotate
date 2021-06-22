@@ -31,7 +31,7 @@ kill PID
 ## mount /etc/logrotate.d/myrotate
 ## 啟動 logrotate 看看
 ```
-logrotate -f /etc/logrotate.d/myrotate >> /log/cron.log 2>&1
+logrotate -f /etc/logrotate.d/timelog_rotate >> /log/cron.log 2>&1
 ls /log -ltr
 ls /log/archive -ltr
 
