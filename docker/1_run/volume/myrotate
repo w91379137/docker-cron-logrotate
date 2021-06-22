@@ -1,0 +1,18 @@
+/log/time.log {
+
+    missingok
+    create 777 root root
+    rotate 10
+
+    daily
+    dateext
+    dateformat .%Y-%m%d-%s
+
+    olddir archive/
+    createolddir 777 root root
+
+    postrotate
+        time=$(date +"%Y_%m%d_%H%M_%S")
+        echo ${time} >> /log/time_rotate.log
+    endscript
+}

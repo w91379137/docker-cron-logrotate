@@ -23,7 +23,7 @@ echo ${time} >> /log/time.log
 ## 啟動 shell 看看
 ```
 mkdir -p /log
-source /script/generatelog.sh
+/script/generatelog.sh
 cat /log/time.log
 ```
 
