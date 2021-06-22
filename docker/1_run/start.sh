@@ -8,7 +8,6 @@ docker run -it -d \
     -e TZ=Asia/Taipei \
     -v $(pwd)/volume/log:/log \
     -v $(pwd)/volume/script:/script \
-    -v $(pwd)/volume/timelog_rotate:/etc/logrotate.d/timelog_rotate \
     cronlogrotate:20210621 bash
 
 # docker exec -it cronlogrotate bash

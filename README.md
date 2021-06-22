@@ -31,14 +31,13 @@ kill PID
 ## mount /etc/logrotate.d/myrotate
 ## 啟動 logrotate 看看
 ```
-logrotate -f /etc/logrotate.d/timelog_rotate >> /log/cron.log 2>&1
+logrotate -f /script/timelog_rotate >> /log/cron.log 2>&1
 ls /log -ltr
 ls /log/archive -ltr
 
-cat /log/cron.log
-cat /log/time_rotate.log
-
 cat /log/time.log
+cat /log/time_rotate.log
+cat /log/cron.log
 ```
 
 ## 設定 crontab

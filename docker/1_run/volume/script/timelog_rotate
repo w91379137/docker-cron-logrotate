@@ -13,6 +13,6 @@
 
     postrotate
         time=$(date +"%Y_%m%d_%H%M_%S")
-        echo ${time} >> /log/time_rotate.log
+        echo "${time} timelog_rotate" >> /log/time_rotate.log
     endscript
 }
