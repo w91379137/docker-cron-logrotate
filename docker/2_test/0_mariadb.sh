@@ -14,5 +14,6 @@ docker run -d \
     -v $(pwd)/volume/log:/var/log/mysql \
     mariadb:10.5
 
+docker network connect myNetwork ${cname}
 # docker exec -it test_mariadb bash
 
