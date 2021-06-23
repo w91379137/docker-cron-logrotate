@@ -1,0 +1,4 @@
+
+TZ=Asia/Taipei
+0-58/2 * * * * /usr/bin/mysql --host=test_mariadb -u "root" --password="234567x" >> /log/cron.log 2>&1
+1-59/2 * * * * /usr/sbin/logrotate -f /script/mariadb >> /log/cron.log 2>&1

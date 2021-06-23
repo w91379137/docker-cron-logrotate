@@ -1,0 +1,18 @@
+
+/log/*.log {
+        
+        missingok
+        create 777 root root
+        rotate 5
+
+        daily        
+        dateext
+        dateformat .%Y-%m%d-%s.log
+
+        olddir archive/
+        createolddir 777 root root
+
+    postrotate
+        /usr/bin/mysql --host=test_mariadb -u "root" --password="234567" -e "FLUSH LOGS;"
+    endscript
+}
