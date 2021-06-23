@@ -5,33 +5,16 @@
 
 # 每一分鐘寫一次 log
 
-## 建立 /script/generatelog.sh
-```
-mkdir -p /script
-cd /script
-touch generatelog.sh
-chmod +x generatelog.sh
-```
-
-## 撰寫連續 log 的 shell
-```
-vim generatelog.sh
-time=$(date +"%Y_%m%d_%H%M_%S")
-echo ${time} >> /log/time.log
-```
-
+## mount /script/timelog.sh
 ## 啟動 shell 看看
 ```
-mkdir -p /log
-source /script/generatelog.sh
+/script/timelog.sh
 cat /log/time.log
 ```
 
-## 設定 crontab
+## 設定 crontab_1
 ```
-crontab -e
-TZ=Asia/Taipei
-* * * * * /script/generatelog.sh >> /log/cron.log 2>&1
+crontab /script/cronjob_1
 crontab -l
 ```
 
@@ -45,54 +28,21 @@ kill PID
 
 # 每兩分鐘切一次 log
 
-## 建立 /etc/logrotate.d/myrotate
-```
-cd /etc/logrotate.d
-touch myrotate
-chmod 644 myrotate
-```
-
-## 撰寫 logrotate 內容
-```
-vim myrotate
-/log/time.log {
-
-    missingok
-    create 777 root root
-    rotate 10
-
-    daily
-    dateext
-    dateformat .%Y-%m%d-%s
-
-    olddir archive/
-    createolddir 777 root root
-
-    postrotate
-        time=$(date +"%Y_%m%d_%H%M_%S")
-        echo ${time} >> /log/time_rotate.log
-    endscript
-}
-```
-
+## mount /etc/logrotate.d/myrotate
 ## 啟動 logrotate 看看
 ```
-logrotate -f /etc/logrotate.d/myrotate >> /log/cron.log 2>&1
+logrotate -f /script/timelog_rotate >> /log/cron.log 2>&1
 ls /log -ltr
 ls /log/archive -ltr
 
-cat /log/cron.log
-cat /log/time_rotate.log
-
 cat /log/time.log
+cat /log/time_rotate.log
+cat /log/cron.log
 ```
 
 ## 設定 crontab
 ```
-crontab -e
-TZ=Asia/Taipei
-0-58/2 * * * * /script/generatelog.sh >> /log/cron.log 2>&1
-1-59/2 * * * * logrotate -f /etc/logrotate.d/myrotate >> /log/cron.log 2>&1
+crontab /script/cronjob_2
 crontab -l
 
 tail -f /log/time_rotate.log
